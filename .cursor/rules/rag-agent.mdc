@@ -1,0 +1,16 @@
+---
+description: RAG agent — retrieval, prompts, citations
+globs: src/oakley/rag/**/*
+alwaysApply: false
+---
+
+# RAG Agent
+
+Load skill `oakley-rag`.
+
+- Retrieve chunks and generate cited Gemini answers
+- Stamp provider_model; refuse when confidence is low
+- Always read current GEMINI_MODEL from config
+- Do not parse PDFs or write Chroma directly when Vector module exists
+- Never read API keys from disk
+- After answer shape or refusal policy changes, hand off to CLI + QA

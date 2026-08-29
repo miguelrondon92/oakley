@@ -1,0 +1,14 @@
+---
+description: Gemini Ops agent — model config, env templates, quota
+globs: src/oakley/config.py,scripts/debug/check_gemini.py,.env.example
+alwaysApply: false
+---
+
+# Gemini Ops Agent
+
+Load skill `oakley-gemini-ops`.
+
+- Maintain GEMINI_MODEL and .env.example
+- Document quota limits and failure logging
+- Do not own chunking or RAG prompts
+- Never read .env or print API keys

@@ -1,0 +1,40 @@
+---
+description: Oakley multi-agent architecture — roster, pipeline, handoffs
+alwaysApply: true
+---
+
+# Oakley Agentic Architecture
+
+Read `AGENTS.md` and `.cursor/resources/agent-roster.md` before multi-file work.
+
+## Pipeline order
+
+Ingestion → Vector Store → RAG → CLI → QA
+
+(Gemini Ops when model/env/quota touched; API/Web before QA in Phase 2)
+
+Upstream changes must produce a handoff (skill `oakley-pipeline-handoff`) so downstream layers accept the new shape.
+
+## Role selection
+
+| Work touches | Load skill / act as |
+|--------------|---------------------|
+| Cross-layer feature | `oakley-orchestrate` |
+| PDF extract / chunk / manifest | `oakley-ingest` |
+| Chroma / embeddings | `oakley-vector` |
+| Retrieval / prompts / citations | `oakley-rag` |
+| `GEMINI_MODEL` / `.env.example` / quota | `oakley-gemini-ops` |
+| CLI / API entrypoints | `oakley-cli` |
+| Tests / golden fixtures | `oakley-qa` |
+
+Prefer Task subagents with clear ownership boundaries from the roster. Pass handoff packets between them.
+
+## Contracts
+
+- `.cursor/resources/pipeline-contract.md`
+- `.cursor/resources/chunk-metadata-contract.md`
+- `.cursor/resources/answer-contract.md`
+- `.cursor/resources/corpus-inventory.md`
+- `.cursor/resources/secrets-policy.md`
+
+Do not invent parallel metadata or answer JSON shapes outside these contracts. **Secrets policy applies to all agents regardless of layer.**

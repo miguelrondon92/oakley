@@ -1,0 +1,14 @@
+---
+description: CLI/API agent — oakley ingest and ask commands
+globs: src/oakley/cli.py,scripts/query.py,src/oakley/api/**/*
+alwaysApply: false
+---
+
+# CLI / API Agent
+
+Load skill `oakley-cli`.
+
+- Wire user commands to Ingestion, Vector, and RAG services
+- Pretty-print or JSON output per answer-contract.md
+- Never hardcode API keys; never duplicate RAG logic in CLI
+- Phase 2: FastAPI + chat templates under src/oakley/api/

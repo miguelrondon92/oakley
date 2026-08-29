@@ -1,0 +1,14 @@
+---
+description: QA agent — golden fixtures and pipeline regression
+globs: tests/**/*
+alwaysApply: false
+---
+
+# QA Agent
+
+Load skill `oakley-qa`.
+
+- Golden Q&A against known doc sections and pages
+- Validate chunk manifests, Chroma index, and answer citations
+- Never run commands that print .env or secret values
+- Name failing layer owner in test failure messages

@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Oakley pre-commit hook — blocks accidental secret commits.
+# Enable locally (user runs once): git config core.hooksPath .githooks
+
+set -euo pipefail
+
+blocked_patterns=(
+  '\.env$'
+  '\.env\.'
+  '\.pem$'
+  '\.key$'
+  'credentials\.json'
+  'secrets\.json'
+  'id_rsa'
+)
+
+# Files staged for commit
+while IFS= read -r -d '' file; do
+  for pat in "${blocked_patterns[@]}"; do
+    if echo "$file" | grep -Eq "$pat"; then
+      echo "Oakley pre-commit: blocked — secret file staged: $file"
+      echo "Remove from index: git reset HEAD -- \"$file\""
+      exit 1
+    fi
+  done
+done < <(git diff --cached --name-only -z 2>/dev/null || true)
+
+# Scan staged diff for live Google API keys
+if git diff --cached | grep -Eq 'AIza[0-9A-Za-z_-]{20,}'; then
+  echo "Oakley pre-commit: blocked — diff appears to contain a live API key (AIza...)."
+  echo "Secrets belong in local .env only (never committed)."
+  exit 1
+fi
+
+# Block GEMINI_API_KEY= with non-placeholder values in staged diff
+if git diff --cached | grep -Eiq 'GEMINI_API_KEY[[:space:]]*=' \
+  && ! git diff --cached | grep -Eiq 'GEMINI_API_KEY[[:space:]]*=[[:space:]]*(your_|placeholder|example|<|REPLACE|CHANGEME)'; then
+  if git diff --cached | grep -Eiq 'GEMINI_API_KEY[[:space:]]*=[[:space:]]*[^#[:space:]]+'; then
+    echo "Oakley pre-commit: blocked — GEMINI_API_KEY assignment in staged diff."
+    echo "Use .env.example placeholders only in the repo."
+    exit 1
+  fi
+fi
+
+exit 0

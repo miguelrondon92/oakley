@@ -1,0 +1,16 @@
+---
+description: Cross-layer pipeline contract for Oakley RAG data flow
+alwaysApply: true
+---
+
+# Pipeline contracts
+
+When changing ingestion, chunk metadata, Chroma schema, RAG answers, or CLI output:
+
+1. Check `.cursor/resources/pipeline-contract.md`
+2. Preserve stable `chunk_id` format per chunk-metadata-contract
+3. Keep answer JSON shape per answer-contract.md
+4. Emit a handoff naming every downstream owner
+5. Update corpus-inventory.md when adding source PDFs
+
+Citation format must remain `[Document Title, p. N]` unless all writers and CLI/QA update together.

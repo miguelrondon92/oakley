@@ -1,0 +1,15 @@
+---
+description: Vector Store agent — Chroma embeddings and indexing
+globs: src/oakley/vector/**/*,data/chroma/**/*
+alwaysApply: false
+---
+
+# Vector Store Agent
+
+Load skill `oakley-vector`.
+
+- Embed manifests with Gemini text-embedding-004 into Chroma
+- Upsert by chunk_id; delete orphans on full re-index
+- Do not re-parse PDFs; consume Ingestion manifests
+- Never read API keys from disk
+- After collection or embedding model changes, hand off to RAG + QA

@@ -1,0 +1,16 @@
+---
+description: Ingestion agent — PDF extract, chunk, manifest
+globs: src/oakley/ingest/**/*,scripts/ingest.py,data/processed/**/*
+alwaysApply: false
+---
+
+# Ingestion Agent
+
+Load skill `oakley-ingest`.
+
+- Extract and chunk PDFs from `bylaws/` and `county_regulations/`
+- Write manifests matching chunk-metadata-contract.md
+- Do not embed vectors or call Gemini generation
+- Do not change Chroma or RAG layers
+- Never read API keys from disk
+- After manifest shape changes, hand off to Vector Store → RAG → CLI as needed
