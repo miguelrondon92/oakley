@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oakley</title>
+  <link rel="stylesheet" href="/static/css/chat.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1>Oakley</h1>
+        <button id="new-chat-btn" type="button" class="btn primary">+ New chat</button>
+      </div>
+      <ul id="conversation-list" class="conversation-list"></ul>
+    </aside>
+
+    <main class="chat-panel">
+      <header class="chat-header">
+        <h2 id="chat-title">New conversation</h2>
+        <div class="source-toggle" role="group" aria-label="Source scope">
+          <span class="toggle-label">Source:</span>
+          <button type="button" class="toggle-btn active" data-source="">All</button>
+          <button type="button" class="toggle-btn" data-source="hoa_bylaw">HOA</button>
+          <button type="button" class="toggle-btn" data-source="county_regulation">County</button>
+        </div>
+      </header>
+
+      <div id="messages" class="messages">
+        <div class="empty-state" id="empty-state">
+          <p>Ask about Oakwood Glen HOA bylaws or Harris County regulations.</p>
+          <p class="hint">Example: "Can I build a treehouse in my backyard?"</p>
+        </div>
+      </div>
+
+      <form id="chat-form" class="chat-form">
+        <textarea id="message-input" rows="2" placeholder="Ask Oakley… (Enter to send, Shift+Enter for new line)" required></textarea>
+        <button type="submit" class="btn primary" id="send-btn">Send</button>
+      </form>
+    </main>
+  </div>
+
+  <template id="message-template">
+    <div class="message">
+      <div class="bubble"></div>
+      <div class="citations"></div>
+    </div>
+  </template>
+
+  <script src="/static/js/chat.js?v=2"></script>
+</body>
+</html>

@@ -2,6 +2,8 @@
 .env
 .env.*
 !.env.example
+.env.local
+.env.production
 *.pem
 *.key
 id_rsa
@@ -12,8 +14,10 @@ secrets.yaml
 secrets.yml
 
 # Generated / local data
-data/processed/
-data/chroma/
+data/
+*.db
+*.sqlite
+*.sqlite3
 
 # Python
 __pycache__/

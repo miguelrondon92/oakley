@@ -1,0 +1,8 @@
+# Deed Restrictions
+## Oakwood Glen is a Deed Restricted neighborhood.
+
+Deed restrictions are recorded within the governing documents and provide specific common standards of conduct for the entire community. Common examples of deed restrictions include restrictions on the size and number of pets, limitations on parking and types of vehicles, business use of the home, and maintaining the appearance of the property. Deed restrictions are not easily changed, and usually require a significant majority vote of the membership to amend. The Board of Directors is charged with enforcing the deed restrictions, and may not ignore or selectively enforce the restrictions. Violations of deed restrictions may result in a temporary suspension of privileges or removal of the violation with associated costs charged to the member.
+
+In addition to the deed restrictions, the governing documents usually grant authority to the Board of Directors to adopt rules and regulations governing the use of the common areas. Common examples of rules and regulations include parking limitations and types of vehicles, policing of pets, and use of common area facilities (clubhouse, pool, etc.). The Board may adopt, amend, or remove rules and regulations at its discretion. The Board may not enforce rules and regulations governing your own property, unless specifically granted such authority within the governing documents.
+
+Some restrictions might seem too restrictive or prohibit you from making a change to the property that is important to you. You should read the deed restrictions before making an offer on any property.

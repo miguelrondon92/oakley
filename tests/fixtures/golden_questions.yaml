@@ -1,0 +1,33 @@
+- question: "What is the ACC appeal process?"
+  source_type_filter: hoa_bylaw
+  expect_refused: false
+  expect_citation:
+    source_file: ACC-Denial-Letter-and-Appeal-Hearing-Policy_REAL-PROPERTY_2021.pdf
+
+- question: "What are the swimming pool enclosure requirements?"
+  source_type_filter: hoa_bylaw
+  expect_refused: false
+  expect_citation:
+    source_file: Swimming-Pool-Enclosure-Policy_REAL-PROPERTY_2021.pdf
+
+- question: "What does Harris County say about community protections?"
+  source_type_filter: county_regulation
+  expect_refused: false
+  expect_citation:
+    source_file: Harris County Community Protections.pdf
+
+- question: "What is the federal tax code for HOAs?"
+  expect_refused: true
+  refusal_reason: no_relevant_chunks
+
+- question: "What are the architectural review requirements?"
+  source_type_filter: hoa_bylaw
+  expect_refused: false
+  expect_citation:
+    source_file: Recorded-OAKWOOD-GLEN-SECOND-AMENDED-AND-RESTATED-BYLAWS-03782964xC3D0.pdf
+
+- question: "Who maintains county streets and roads?"
+  source_type_filter: county_regulation
+  expect_refused: false
+  expect_citation:
+    source_file: Harris County Streets and Roads.pdf

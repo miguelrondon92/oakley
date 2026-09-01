@@ -1,0 +1,15 @@
+---
+description: Web/API agent — FastAPI chat UI and conversation persistence
+globs: src/oakley/api/**/*,src/oakley/db/**/*,templates/**/*,static/**/*
+alwaysApply: false
+---
+
+# Web / API Agent
+
+Load skill `oakley-web`.
+
+- FastAPI routes and SQLite conversation store
+- Rich chat UI under templates/ and static/
+- `oakley serve` entrypoint
+- Pass message history to RAG; do not change retrieval logic in API layer
+- Never read API keys from disk

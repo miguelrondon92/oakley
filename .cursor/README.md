@@ -60,6 +60,7 @@ After ingest/RAG/CLI changes: run golden QA fixtures before closing a handoff.
 | `oakley-vector` | Vector Store |
 | `oakley-rag` | RAG |
 | `oakley-gemini-ops` | Gemini Ops |
-| `oakley-cli` | CLI / API |
+| `oakley-cli` | CLI |
+| `oakley-web` | Web chat / API |
 | `oakley-pipeline-handoff` | All layers |
 | `oakley-qa` | QA |

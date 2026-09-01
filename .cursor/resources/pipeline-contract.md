@@ -6,17 +6,18 @@ Update this file when a layer changes the data shape; then run `oakley-pipeline-
 ## End-to-end flow
 
 ```
-[Sources] bylaws/*.pdf + county_regulations/*.pdf
-        │  Catalog: corpus-inventory.md
+[Sources] hoa_docs/** (PDF + MD) + county_regulations/*.pdf
+        │  Registry: config.CORPUS_ROOTS + corpus-inventory.md
         ▼
-[Ingestion] PDF extract (PyMuPDF) → clean → section-aware chunk
+[Ingestion] Per-file incremental parse (content-hash reuse, path-move detection)
+        │  PDF: PyMuPDF extract → section-aware chunk
+        │  MD: heading-based chunk (content_format=markdown)
         │  Output: data/processed/<manifest_id>/chunk_manifest.json
-        │  Per-chunk fields: chunk-metadata-contract.md
+        │  Pointer: data/processed/latest.json (+ previous_manifest_id)
         ▼
-[Vector Store] Gemini text-embedding-004 → Chroma persist (data/chroma/)
-        │  Collection: oakley_corpus (default)
-        │  Vector ID = chunk_id
-        │  Metadata = all chunk fields except `text`
+[Vector Store] Gemini gemini-embedding-001 → Chroma persist (data/chroma/)
+        │  Incremental index: embed only new/changed chunks; metadata-only upsert on moves
+        │  --prune-orphans removes stale chunk_ids (default on)
         ▼
 [RAG] Query embed → top-K retrieve → Gemini generate
         │  Output: answer-contract.md
@@ -37,8 +38,10 @@ Update this file when a layer changes the data shape; then run `oakley-pipeline-
 ## Versioning rules
 
 - Re-ingest creates a new manifest directory under `data/processed/`; Vector Store upserts by `chunk_id`.
-- Orphan vectors (chunk_id no longer in latest manifest) should be deleted on full re-index.
+- **Incremental parse:** reuse chunks when per-file `content_hash` unchanged; detect moved files (same hash, new path) without re-extract/re-embed.
+- Orphan vectors (chunk_id no longer in latest manifest) should be deleted on re-index (`--prune-orphans`, default).
 - Do not mutate historical manifest JSON; write new manifest per ingest run.
+- `latest.json` stores `previous_manifest_id` for incremental index comparisons.
 
 ## Chroma record shape
 
@@ -46,8 +49,8 @@ Update this file when a layer changes the data shape; then run `oakley-pipeline-
 |-------|----------|-------|
 | `id` | Chroma id | = `chunk_id` |
 | `document` | Chroma document | chunk `text` |
-| `embedding` | Chroma embedding | 768-dim from text-embedding-004 |
-| `metadata` | Chroma metadata | all chunk metadata fields (strings/ints only; no nested JSON) |
+| `embedding` | Chroma embedding | from `models/gemini-embedding-001` |
+| `metadata` | Chroma metadata | flat chunk metadata including `content_format`, `doc_category`, optional `context_doc_*` |
 
 Chroma metadata must be flat. Serialize lists as comma-separated strings if needed.
 

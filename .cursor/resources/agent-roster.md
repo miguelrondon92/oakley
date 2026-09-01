@@ -5,7 +5,7 @@
 ### Orchestrator (parent / coordinator)
 - Owns cross-cutting features and sequencing.
 - Does not implement deep domain logic when a specialist exists.
-- Ensures Ingestion → Vector Store → RAG → CLI → QA handoffs complete (API/Web before QA in Phase 2).
+- Ensures Ingestion → Vector Store → RAG → CLI → API/Web → QA handoffs complete.
 - Resolves contract conflicts using [pipeline-contract.md](pipeline-contract.md).
 
 ### Ingestion Agent
@@ -35,12 +35,15 @@
 - Free tier: ~15–30 RPM, ~1500 RPD, midnight PT reset, 429 `RESOURCE_EXHAUSTED`.
 - Does not own chunking/prompts — hand those to Ingestion and RAG respectively.
 
-### CLI / API Agent
-- Owns user-facing entrypoints.
-- Phase 1 files: `src/oakley/cli.py`, `scripts/query.py`.
-- Phase 2 files: `src/oakley/api/`, `templates/`, `static/`.
-- Never hardcodes API keys; use env vars loaded by config.
-- Consumes RAG service; never calls Chroma or Gemini directly from CLI/API layer when a RAG module exists.
+### CLI Agent
+- Owns CLI entrypoints: `src/oakley/cli.py`
+- Commands: parse, index, ingest, ask, serve, clean, status
+
+### Web / API Agent
+- Owns web chat UI and REST API.
+- Files: `src/oakley/api/`, `src/oakley/db/`, `templates/`, `static/`
+- `oakley serve` — multi-turn conversations in SQLite
+- See [conversation-contract.md](conversation-contract.md)
 
 ### QA Agent
 - Owns verification of the full chain.
@@ -63,10 +66,6 @@
 1. Ingestion  → chunk manifest from bylaws/ + county_regulations/
 2. Vector     → embed + index into Chroma
 3. RAG        → retrieval + prompt + citation formatter
-4. CLI        → oakley ingest / oakley ask
-5. QA         → golden questions with expected source doc + page
+4. CLI        → oakley ingest / oakley ask / oakley serve
+5. QA         → golden questions + API tests
 ```
-
-## Phase 2 extension
-
-When CLI MVP is verified, add **API/Web Agent** for `src/oakley/api/`, `templates/`, `static/` — insert before QA in the pipeline.

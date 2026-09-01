@@ -39,7 +39,7 @@ RAG: retrieve top-K → Gemini answer + citations
         ↓
 CLI: oakley ingest | oakley ask "..."
         ↓
-(Phase 2) API/Web chat UI
+Web: oakley serve → multi-turn chat (SQLite)
         ↓
 QA: golden Q&A fixtures against known doc sections
 ```
@@ -64,7 +64,7 @@ When Gemini calls fail (missing key, model error, quota, empty embedding):
 | **Vector Store** | Embeddings, Chroma schema, re-index | `src/oakley/vector/`, `data/chroma/` |
 | **RAG** | Retrieval params, prompts, citation rules | `src/oakley/rag/` |
 | **Gemini Ops** | `GEMINI_MODEL`, quota probes, `.env.example` | `src/oakley/config.py`, `scripts/debug/check_gemini.py` |
-| **CLI / API** | User-facing entrypoints | `src/oakley/cli.py`, later `src/oakley/api/` |
+| **CLI / API** | User-facing entrypoints | `src/oakley/cli.py`, `src/oakley/api/`, `templates/`, `static/` |
 | **QA** | Golden Q&A fixtures, ingest/query regression | `tests/`, `tests/fixtures/` |
 
 ## How to run work
@@ -83,7 +83,8 @@ When Gemini calls fail (missing key, model error, quota, empty embedding):
 | `oakley-vector` | Chroma collections / embedding / re-index |
 | `oakley-rag` | Retrieval tuning / prompts / citations |
 | `oakley-gemini-ops` | Model constant / quota / failure handling |
-| `oakley-cli` | CLI commands; later API routes |
+| `oakley-cli` | CLI commands |
+| `oakley-web` | Web chat UI / API / conversations |
 | `oakley-pipeline-handoff` | After any layer change that affects downstream |
 | `oakley-qa` | Verification and regression |
 

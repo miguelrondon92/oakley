@@ -6,7 +6,7 @@ set -euo pipefail
 
 blocked_patterns=(
   '\.env$'
-  '\.env\.'
+  '\.env\.(local|production|development|staging|test)$'
   '\.pem$'
   '\.key$'
   'credentials\.json'
@@ -14,8 +14,22 @@ blocked_patterns=(
   'id_rsa'
 )
 
+allowlist_patterns=(
+  '\.env\.example$'
+)
+
 # Files staged for commit
 while IFS= read -r -d '' file; do
+  allowed=false
+  for allow in "${allowlist_patterns[@]}"; do
+    if echo "$file" | grep -Eq "$allow"; then
+      allowed=true
+      break
+    fi
+  done
+  if $allowed; then
+    continue
+  fi
   for pat in "${blocked_patterns[@]}"; do
     if echo "$file" | grep -Eq "$pat"; then
       echo "Oakley pre-commit: blocked — secret file staged: $file"

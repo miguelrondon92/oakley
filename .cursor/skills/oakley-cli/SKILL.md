@@ -23,7 +23,7 @@ Phase 2: `src/oakley/api/`, `templates/`, `static/`.
 1. Wire CLI args to Ingestion, Vector Store, and RAG services.
 2. Pretty-print answers (default) or emit JSON (`--json`).
 3. Exit codes: 0 success, 1 user error, 2 infrastructure/Gemini failure.
-4. Phase 2: FastAPI `/ask` endpoint + minimal chat page.
+4. Phase 2 (done): FastAPI chat UI via `oakley serve`.
 
 ## Rules
 

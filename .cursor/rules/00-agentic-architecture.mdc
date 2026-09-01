@@ -9,9 +9,9 @@ Read `AGENTS.md` and `.cursor/resources/agent-roster.md` before multi-file work.
 
 ## Pipeline order
 
-Ingestion → Vector Store → RAG → CLI → QA
+Ingestion → Vector Store → RAG → CLI → API/Web → QA
 
-(Gemini Ops when model/env/quota touched; API/Web before QA in Phase 2)
+(Gemini Ops when model/env/quota touched)
 
 Upstream changes must produce a handoff (skill `oakley-pipeline-handoff`) so downstream layers accept the new shape.
 
@@ -24,7 +24,8 @@ Upstream changes must produce a handoff (skill `oakley-pipeline-handoff`) so dow
 | Chroma / embeddings | `oakley-vector` |
 | Retrieval / prompts / citations | `oakley-rag` |
 | `GEMINI_MODEL` / `.env.example` / quota | `oakley-gemini-ops` |
-| CLI / API entrypoints | `oakley-cli` |
+| CLI commands | `oakley-cli` |
+| Web chat / API / conversations | `oakley-web` |
 | Tests / golden fixtures | `oakley-qa` |
 
 Prefer Task subagents with clear ownership boundaries from the roster. Pass handoff packets between them.
@@ -36,5 +37,6 @@ Prefer Task subagents with clear ownership boundaries from the roster. Pass hand
 - `.cursor/resources/answer-contract.md`
 - `.cursor/resources/corpus-inventory.md`
 - `.cursor/resources/secrets-policy.md`
+- `.cursor/resources/conversation-contract.md`
 
 Do not invent parallel metadata or answer JSON shapes outside these contracts. **Secrets policy applies to all agents regardless of layer.**
